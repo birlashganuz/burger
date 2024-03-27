@@ -42,9 +42,11 @@ const btns = document.querySelectorAll('.card__shop'),
     basketBox = document.querySelector('.basket__box'),
     shop__item = document.querySelector('.shop__item'),
     basket__total = document.querySelector('.basket__total'),
-    card__img = document.querySelectorAll('.card__img')
+    card__imgs = document.querySelectorAll('.card__img'),
+    header__img = document.querySelector('.header__img'),
+    newDiv = document.createElement('div')
 
-// console.log(card__img);
+
 
 btns.forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -84,6 +86,7 @@ function basketInfo() {
         shop__item.innerHTML = productArr.length
     } else {
         shop__item.classList.remove('active')
+        basket__total.innerHTML = 0
     }
 
 }
@@ -124,7 +127,42 @@ basketClose.addEventListener('click', () => {
     basket.classList.remove('active')
 })
 
+// const preview = `<div><img src=></div>`
 
-card__img.forEach(src => {
-    console.log(src);
+card__imgs.forEach(img => {
+    img.style.cursor = 'pointer'
+    img.addEventListener('click', (e) => {
+        src = img.getAttribute('src')
+        header__img.src = src
+    })
+    img.addEventListener('dblclick', (e) => {
+        src = img.getAttribute('src')
+
+        const myDiv = document.createElement('div'),
+            body = document.querySelector('body'),
+            previewImage = document.createElement('img')
+
+        body.style = 'position:relative;'
+
+        myDiv.setAttribute('class', 'modal')
+        previewImage.setAttribute('class', 'preview')
+        previewImage.setAttribute('src', src)
+        body.appendChild(myDiv)
+
+        const modalStyle = document.querySelector('.modal')
+        modalStyle.style = 'width: 100%; height: 100%; background-color:rgba(0, 0, 0, 0.75); position: absolute;' +
+            'border-radius: 6px; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; justify-content: center;' +
+            ' align-items: center;'
+
+        myDiv.appendChild(previewImage)
+        const preview = document.querySelector('.preview')
+        preview.style = 'border-radius:6px;'
+    })
 })
+
+window.addEventListener('click', (e) => {
+    if (document.querySelector('.modal')) {
+        document.querySelector('.modal').remove()
+    }
+})
+
